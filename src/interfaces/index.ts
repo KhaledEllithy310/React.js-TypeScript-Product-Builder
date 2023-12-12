@@ -11,6 +11,9 @@ export interface IProduct {
   };
 }
 
+export interface IProductWithoutColAndCateAndId
+  extends Omit<IProduct, "colors" | "category" | "id"> {}
+
 export interface ICategory {
   id: string;
   name: string;

@@ -11,8 +11,6 @@ const Button = ({
   width = "w-full",
   ...rest
 }: IButtonProps) => {
-  console.log({ rest });
-
   return (
     <button
       className={`${className} ${width} text-white rounded-md py-1 font-medium capitalize`}
