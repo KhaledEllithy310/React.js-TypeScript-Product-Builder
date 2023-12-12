@@ -52,8 +52,7 @@ export default function App() {
         name={input.name}
         id={input.id}
         type={input.type}
-        //next line includes error
-        // value={product[input.name]}
+        value={product[input.name]}
         onChange={onChangeHandler}
       />
     );
