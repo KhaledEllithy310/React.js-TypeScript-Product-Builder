@@ -146,30 +146,30 @@ export const productList: IProduct[] = [
   },
 ];
 
-export const formInputsList: IFormInput[] = [
+export const formInputList: IFormInput[] = [
   {
-    id: "title",
+    type: "text",
     name: "title",
-    label: "Product Title",
-    type: "text",
+    id: "title",
+    label: "product title",
   },
   {
-    id: "description",
+    type: "text",
     name: "description",
-    label: "Product Description",
-    type: "text",
+    id: "description",
+    label: "product description",
   },
   {
+    type: "text",
+    name: "image",
     id: "image",
-    name: "imageURL",
-    label: "Product Image URL",
-    type: "text",
+    label: "product image url",
   },
   {
-    id: "price",
-    name: "price",
-    label: "Product Price",
     type: "text",
+    name: "price",
+    id: "price",
+    label: "product price",
   },
 ];
 

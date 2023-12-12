@@ -1,13 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import Button from "../Button/Button";
+import { Fragment, ReactNode } from "react";
 
 interface IModalProps {
   isOpen: boolean;
   closeModal: () => void;
   title?: string;
+  children: ReactNode;
 }
-export default function Modal({ isOpen, closeModal, title }: IModalProps) {
+export default function Modal({
+  isOpen,
+  closeModal,
+  title,
+  children,
+}: IModalProps) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -38,27 +43,11 @@ export default function Modal({ isOpen, closeModal, title }: IModalProps) {
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
-                    className="capitalize text-lg font-medium leading-6 text-gray-900"
+                    className="capitalize text-lg font-medium leading-6 text-gray-900 mb-3"
                   >
                     {title}
                   </Dialog.Title>
-
-                  <div className="flex items-center space-x-2 mt-3">
-                    <Button
-                      type="button"
-                      className="bg-indigo-600 hover:bg-indigo-700"
-                      onClick={closeModal}
-                    >
-                      submit
-                    </Button>
-                    <Button
-                      type="button"
-                      className="bg-neutral-400 hover:bg-neutral-500"
-                      onClick={closeModal}
-                    >
-                      cancel
-                    </Button>
-                  </div>
+                  <div>{children ? children : ""}</div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
