@@ -7,12 +7,15 @@ interface IProductCardProps {
   product: IProduct;
   setProductToEdit: (product: IProduct) => void;
   openEditModal: () => void;
+  openIsConfirmModal: () => void;
+  setProductDeletedId: (id: string | undefined) => void;
 }
 const ProductCard = ({
   product,
   setProductToEdit,
   openEditModal,
-  
+  openIsConfirmModal,
+  setProductDeletedId,
 }: IProductCardProps) => {
   const { imageURL, title, description, category, price, colors } = product;
   //-------- HANDLER --------//
@@ -30,23 +33,30 @@ const ProductCard = ({
           className="rounded-md h-52 w-full lg:object-cover"
         />
       </div>
-      <h3 className="text-lg font-semibold">{textSlice(title, 25)}</h3>
-      <p className="text-sm text-gray-500 break-words">
+      <h3 className="text-lg font-semibold truncate">{textSlice(title, 25)}</h3>
+      <p className="text-sm text-gray-500 break-words truncate">
         {textSlice(description)}
       </p>
       <div className="flex items-center flex-wrap space-x-1">
-        {colors.map((color) => (
-          <span
-            key={color}
-            className={`w-5 h-5 rounded-full`}
-            style={{ backgroundColor: color }}
-          ></span>
-        ))}
+        {colors.length > 0 ? (
+          colors
+            .slice(0, 8)
+            .map((color) => (
+              <span
+                key={color}
+                className="w-5 h-5 rounded-full"
+                style={{ backgroundColor: color }}
+              ></span>
+            ))
+        ) : (
+          <p className="text-sm font-semibold">Not Available colors</p>
+        )}
+        {colors.length > 8 && `+${colors.length - 8}`}
       </div>
       <div className="flex justify-between items-center">
         <strong className="text-indigo-600">${price}</strong>
         <div className="flex items-center gap-2">
-          <p className="text-lg text-indigo-600 font-semibold">
+          <p className="text-sm text-indigo-600 font-semibold">
             {category.name}
           </p>
           <Image
@@ -61,7 +71,16 @@ const ProductCard = ({
         <Button className="bg-indigo-600" onClick={onEdit}>
           edit
         </Button>
-        <Button className="bg-red-600">remove</Button>
+        <Button
+          className="bg-red-600"
+          // onClick={() => removeProduct(product.id)}
+          onClick={() => {
+            openIsConfirmModal();
+            setProductDeletedId(product.id);
+          }}
+        >
+          remove
+        </Button>
       </div>
     </div>
   );
