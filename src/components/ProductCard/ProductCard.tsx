@@ -5,9 +5,21 @@ import Image from "../ui/Image/Image";
 
 interface IProductCardProps {
   product: IProduct;
+  setProductToEdit: (product: IProduct) => void;
+  openEditModal: () => void;
 }
-const ProductCard = ({ product }: IProductCardProps) => {
+const ProductCard = ({
+  product,
+  setProductToEdit,
+  openEditModal,
+  
+}: IProductCardProps) => {
   const { imageURL, title, description, category, price, colors } = product;
+  //-------- HANDLER --------//
+  const onEdit = () => {
+    setProductToEdit(product);
+    openEditModal();
+  };
   return (
     <div className="max-w-sm md:max-w-lg mx-auto md:mx-0 border rounded-md p-2 flex flex-col space-y-3">
       <div>
@@ -46,7 +58,9 @@ const ProductCard = ({ product }: IProductCardProps) => {
       </div>
 
       <div className="flex items-center justify-between space-x-2">
-        <Button className="bg-indigo-600">edit</Button>
+        <Button className="bg-indigo-600" onClick={onEdit}>
+          edit
+        </Button>
         <Button className="bg-red-600">remove</Button>
       </div>
     </div>
