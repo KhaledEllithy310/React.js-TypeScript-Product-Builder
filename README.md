@@ -4,7 +4,7 @@
 
 Welcome to our project! This is a Product Builder App made in TypeScript and React.js framework. it is a robust application built from scratch, leveraging CRUD operations and TypeScript for type validation. It features pixel-perfect designs through Tailwind CSS, ensuring optimal performance and accessibility. utilizing validation rules, and JSDoc is used for thorough code documentation and promoting code reuse. The Product Builder showcases my expertise in frontend development, delivering a high-quality user experience.
 
-![Product Builder Home](./src/assets/slidersection.png)
+![Product Builder Home](./src/assets/image/homeproductbuilder.png)
 
 ## Technologies
 
