@@ -51,7 +51,7 @@ const ProductCard = ({
         ) : (
           <p className="text-sm font-semibold">Not Available colors</p>
         )}
-        {colors.length > 8 && `+${colors.length - 8}`}
+        <p className="h-5">{colors.length > 8 && `+${colors.length - 8}`}</p>
       </div>
       <div className="flex justify-between items-center">
         <strong className="text-indigo-600">${price}</strong>
