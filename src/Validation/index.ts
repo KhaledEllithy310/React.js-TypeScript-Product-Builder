@@ -8,9 +8,7 @@ export const productValidation = (product: IProductWithoutColAndCateAndId) => {
     price: "",
   };
 
-  const imageValidate = /(https?:\/\/.*\.(jpeg|jpg|gif|png|bmp|svg))$/i.test(
-    product.imageURL
-  );
+  const imageValidate = /^(ftp|http|https):\/\/[^ "]+$/.test(product.imageURL);
   // title
   if (
     !product.title.trim() ||

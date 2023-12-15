@@ -32,18 +32,26 @@ export default function App() {
   };
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEditModal, setIsOpenEditModal] = useState(false);
+  const [isOpenConfirmModal, setIsOpenConfirmModal] = useState(false);
   const [product, setProduct] = useState<IProduct>(defaultProduct);
   const [products, setProducts] = useState<IProduct[]>(productList);
   const [productToEdit, setProductToEdit] = useState<IProduct>(defaultProduct);
+  const [productDeletedId, setProductDeletedId] = useState<string | undefined>(
+    "0"
+  );
+  useState<IProduct>(defaultProduct);
   const [errors, setErrors] = useState(defaultError);
   const [tempColors, setTempColors] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+
   //-------- HANDLER --------//
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
   const closeEditModal = () => setIsOpenEditModal(false);
   const openEditModal = () => setIsOpenEditModal(true);
+  const closeIsConfirmModal = () => setIsOpenConfirmModal(false);
+  const openIsConfirmModal = () => setIsOpenConfirmModal(true);
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,16 +77,20 @@ export default function App() {
       [name]: "",
     });
   };
-
   const formCancel = () => {
     setProduct(defaultProduct);
     setErrors(defaultError);
     closeModal();
   };
+
   const formEditCancel = () => {
     setProduct(defaultProduct);
     setErrors(defaultError);
     closeEditModal();
+  };
+
+  const isConfirmCancel = () => {
+    closeIsConfirmModal();
   };
 
   const formHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -133,22 +145,7 @@ export default function App() {
       colors: tempColors.concat(productToEdit.colors),
     };
     setProducts(updatedProducts);
-    // if (tempColors.length > 0) {
-    // setProducts((prev) => [
-    //   {
-    //     ...product,
-    //     id: uuid(),
-    //     colors: tempColors,
-    //     category: selectedCategory,
-    //   },
-    //   ...prev,
-    // ]);
-
-    // setErrors(defaultError);
-    // setProduct(defaultProduct);
-    // setTempColors([]);
     closeEditModal();
-    // }
   };
 
   const colorsHandlers = (e: MouseEvent<HTMLSpanElement>, color: string) => {
@@ -165,6 +162,15 @@ export default function App() {
     }
   };
 
+  const removeProduct = () => {
+    console.log("productDeletedId", productDeletedId);
+
+    const updatedProduct = [...products];
+    setProducts(
+      updatedProduct.filter((product) => product.id !== productDeletedId)
+    );
+    closeIsConfirmModal();
+  };
   //-------- Renders --------//
 
   const renderProductList = products.map((product) => (
@@ -173,6 +179,8 @@ export default function App() {
       product={product}
       setProductToEdit={setProductToEdit}
       openEditModal={openEditModal}
+      openIsConfirmModal={openIsConfirmModal}
+      setProductDeletedId={setProductDeletedId}
     />
   ));
 
@@ -219,19 +227,15 @@ export default function App() {
   return (
     <main className="container">
       <section className="w-fit my-3 mx-auto">
-        <Button className="bg-indigo-600 py-1 px-5" onClick={openModal}>
-          Add
+        <Button className="bg-indigo-600 py-2 px-6 mt-5" onClick={openModal}>
+          Build Product
         </Button>
       </section>
       <section className="m-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 p-2 rounded-md">
         {renderProductList}
       </section>
       {/* Add Product Modal */}
-      <Modal
-        closeModal={closeEditModal}
-        isOpen={isOpen}
-        title=" Add a new product"
-      >
+      <Modal closeModal={closeModal} isOpen={isOpen} title=" Add a new product">
         <form className="space-y-2" onSubmit={formHandler}>
           {renderFormInput}
           <Select
@@ -270,7 +274,7 @@ export default function App() {
 
       {/* Edit Product Modal */}
       <Modal
-        closeModal={closeModal}
+        closeModal={closeEditModal}
         isOpen={isOpenEditModal}
         title=" Edit This product"
       >
@@ -312,6 +316,32 @@ export default function App() {
             </Button>
           </section>
         </form>
+      </Modal>
+
+      {/* Is Confirm Modal */}
+      <Modal
+        closeModal={closeIsConfirmModal}
+        isOpen={isOpenConfirmModal}
+        title="Delete Product"
+      >
+        <div className="space-y-2">
+          <p>delete this product</p>
+          <section className="flex items-center space-x-2">
+            <Button
+              className="bg-red-600 hover:bg-red-700"
+              onClick={removeProduct}
+            >
+              Delete
+            </Button>
+            <Button
+              className="bg-neutral-400 hover:bg-neutral-500"
+              type="button"
+              onClick={isConfirmCancel}
+            >
+              cancel
+            </Button>
+          </section>
+        </div>
       </Modal>
     </main>
   );
