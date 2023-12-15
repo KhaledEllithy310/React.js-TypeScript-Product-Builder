@@ -14,7 +14,6 @@ function classNames(...classes: string[]) {
 }
 
 const Select = ({ selected, setSelected }: ICategoryProps) => {
-
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
